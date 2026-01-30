@@ -1,5 +1,5 @@
 """Импорты библеотек."""
-from random import randint,choice
+from random import randint, choice
 
 import pygame
 
@@ -57,22 +57,20 @@ class GameObject:
 class Apple(GameObject):
     """Класс, описывающий яблоко."""
 
-    def __init__(self, occupied_positions=None):
+    def __init__(self, occupied_pos=None):
         """Начальное состояние яблока."""
         super().__init__(body_color=APPLE_COLOR)
-        self.randomize_position(occupied_positions)
+        self.randomize_position(occupied_pos)
 
-    def randomize_position(self, occupied_positions=None):
+    def randomize_position(self, occupied_pos=None):
         """Устанавливает случайные координаты яблока, не занятые змейкой."""
         while True:
             self.position = (
                 randint(0, GRID_WIDTH - 1) * GRID_SIZE,
                 randint(0, GRID_HEIGHT - 1) * GRID_SIZE,
             )
-            if occupied_positions is None or self.position not in occupied_positions:
+            if occupied_pos is None or self.position not in occupied_pos:
                 break
-
-
 
     def draw(self):
         """Рисует яблоко на игровом поле."""
@@ -90,7 +88,7 @@ class Snake(GameObject):
         self.body_color = SNAKE_COLOR
         self.length = 1
         self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
-        possible_directions = [(UP),(RIGHT),(DOWN),(LEFT)]
+        possible_directions = [(UP), (RIGHT), (DOWN), (LEFT)]
         self.direction = choice(possible_directions)
         self.next_direction = None
         self.last = None
@@ -167,7 +165,7 @@ def main():
 
         if snake.get_head_position() == apple.position:
             snake.length += 1
-            apple.randomize_position(snake.positions) 
+            apple.randomize_position(snake.positions)
 
         elif snake.get_head_position() in snake.positions[1:]:
             snake.reset()
