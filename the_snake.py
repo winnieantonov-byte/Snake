@@ -1,5 +1,5 @@
 """Импорты библеотек."""
-from random import randint, choice
+from random import choice, randint 
 
 import pygame
 
