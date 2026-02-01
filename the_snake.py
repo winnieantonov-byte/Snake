@@ -86,7 +86,7 @@ class Snake(GameObject):
 
     def __init__(self, position=None, body_color=None):
         """Начальное состояние змейки."""
-        super().__init__(position = CENTRAL, body_color=SNAKE_COLOR)
+        super().__init__(position=CENTRAL, body_color=SNAKE_COLOR)
         self.length = 1
         self.positions = [self.position]
         self.direction = RIGHT
