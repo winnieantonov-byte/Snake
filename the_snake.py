@@ -137,6 +137,7 @@ class Snake(GameObject):
         possible_directions = [(UP), (RIGHT), (DOWN), (LEFT)]
         self.direction = choice(possible_directions)
 
+
 def handle_keys(snake):
     """Обрабатывает нажатия клавиш."""
     for event in pygame.event.get():
@@ -182,4 +183,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
