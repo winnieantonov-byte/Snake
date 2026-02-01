@@ -88,13 +88,13 @@ class Snake(GameObject):
         """Начальное состояние змейки."""
         super().__init__(position, body_color=SNAKE_COLOR)
         self.length = 1
-        self.position = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
+        self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
         self.direction = RIGHT
         self.next_direction = None
         self.last = None
 
     def update_direction(self, direction):
-        """Обновляет направление движения."""
+        """Обновляет направление движения, предотвращая разворот."""
         tail = (self.direction[0] * -1, self.direction[1] * -1)
         if direction and tail != direction:
             self.direction = direction
@@ -108,15 +108,15 @@ class Snake(GameObject):
             (x + dir_x * GRID_SIZE) % SCREEN_WIDTH,
             (y + dir_y * GRID_SIZE) % SCREEN_HEIGHT
         )
-        self.position.insert(0, new_head)
-        if len(self.position) > self.length:
-            self.last = self.position.pop()
+        self.positions.insert(0, new_head)
+        if len(self.positions) > self.length:
+            self.last = self.positions.pop()
         else:
             self.last = None
 
     def draw(self) -> None:
         """Отрисовывает все сегменты тела змейки."""
-        for position in self.position:
+        for position in self.positions:
             rect = pygame.Rect(position, (GRID_SIZE, GRID_SIZE))
             pygame.draw.rect(screen, self.body_color, rect)
             pygame.draw.rect(screen, BORDER_COLOR, rect, 1)
@@ -127,12 +127,12 @@ class Snake(GameObject):
 
     def get_head_position(self):
         """Возвращает текущие координаты головы змейки."""
-        return self.position[0]
+        return self.positions[0]
 
     def reset(self):
         """Сбрасывает состояние змейки при столкновении с собой."""
         self.length = 1
-        self.position = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
+        self.positions = [(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2)]
         self.next_direction = None
         possible_directions = [(UP), (RIGHT), (DOWN), (LEFT)]
         self.direction = choice(possible_directions)
@@ -160,18 +160,18 @@ def handle_keys(snake):
 def main():
     """Основной игровой цикл."""
     snake = Snake()
-    apple = Apple(snake.position)
+    apple = Apple(snake.positions)
     while True:
         handle_keys(snake)
         snake.move()
 
         if snake.get_head_position() == apple.position:
             snake.length += 1
-            apple.randomize_position(snake.position)
+            apple.randomize_position(snake.positions)
 
-        elif snake.get_head_position() in snake.position[1:]:
+        elif snake.get_head_position() in snake.positions[1:]:
             snake.reset()
-            apple.randomize_position(snake.position)
+            apple.randomize_position(snake.positions)
 
         screen.fill(BOARD_BACKGROUND_COLOR)
         snake.draw()
