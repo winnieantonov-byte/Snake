@@ -1,7 +1,8 @@
 """Импорты библеотек."""
-import pygame
 
 from random import choice, randint
+
+import pygame
 
 # Константы для размеров поля и сетки:
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
@@ -56,9 +57,9 @@ class GameObject:
 class Apple(GameObject):
     """Класс, описывающий яблоко."""
 
-    def __init__(self, occupied_pos=None, position=None, body_color=APPLE_COLOR):
+    def __init__(self, occupied_pos=None, position=None, body_color=None):
         """Начальное состояние яблока."""
-        super().__init__(position=position, body_color=body_color)
+        super().__init__(position=position, body_color=APPLE_COLOR)
         self.randomize_position(occupied_pos)
 
     def randomize_position(self, occupied_pos=None):
