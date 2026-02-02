@@ -1,8 +1,7 @@
 """Импорты библеотек."""
+import pygame
 
 from random import choice, randint
-
-import pygame
 
 # Константы для размеров поля и сетки:
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
@@ -57,14 +56,14 @@ class GameObject:
 class Apple(GameObject):
     """Класс, описывающий яблоко."""
 
-    def __init__(self, occupied_pos=None, position=None, body_color=None):
+    def __init__(self, occupied_pos=None, position=None, body_color=APPLE_COLOR):
         """Начальное состояние яблока."""
-        super().__init__(position=None, body_color=APPLE_COLOR)
+        super().__init__(position=position, body_color=body_color)
         self.randomize_position(occupied_pos)
 
     def randomize_position(self, occupied_pos=None):
         """Устанавливает случайные координаты яблока, не занятые змейкой."""
-        if occupied_pos is None:
+        if not occupied_pos:
             occupied_pos = []
         while True:
             self.position = (
@@ -84,9 +83,9 @@ class Apple(GameObject):
 class Snake(GameObject):
     """Класс, описывающий змейку и её поведение."""
 
-    def __init__(self, position=None, body_color=None):
+    def __init__(self, position=CENTRAL, body_color=SNAKE_COLOR):
         """Начальное состояние змейки."""
-        super().__init__(position=CENTRAL, body_color=SNAKE_COLOR)
+        super().__init__(position=position, body_color=body_color)
         self.length = 1
         self.positions = [self.position]
         self.direction = RIGHT
